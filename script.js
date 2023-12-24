@@ -6,6 +6,7 @@
 const newTask = () => {};
 
 // HTML ELEMENTS:
+const taskForm = document.querySelector(".task-form");
 const taskInput = document.querySelector(".task-input");
 const taskAddBtn = document.querySelector(".task-add");
 const taskRemoveBtn = document.querySelector(".close");
@@ -17,6 +18,11 @@ const taskDoneBtn = document.querySelector(".open");
 let taskCounter = 0;
 
 // APP:
+
+// PREVENT THE FORM TO RELOAD THE SITE
+taskForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
 
 /* APP EXECUTION
 1. User type a new task.
