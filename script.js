@@ -12,6 +12,14 @@ const addItem = () => {
     return 1;
   }
 
+  // Check if limit of task exceed
+  if (taskCounter >= 5) {
+    window.alert(`Limit of task exceed. Please delete a task and try again`);
+    console.log(taskCounter);
+    taskInput.value = "";
+    return 1;
+  }
+
   // Check if characters are less than 29
   if (userInput.length > 29) {
     window.alert(
@@ -58,6 +66,7 @@ const addItem = () => {
   newDeleteBtn.appendChild(newDeleteIcon);
 
   taskInput.value = "";
+  taskCounter++;
 };
 
 // SELECTORS
