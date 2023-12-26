@@ -1,21 +1,31 @@
 "use strict";
 
 // FUNCTIONS
+// Store the tasks created locally in our browser
+const saveData = () => {
+  localStorage.setItem("data", taskList.innerHTML);
+  localStorage.setItem("counter", taskCounter);
+};
+
+const showTask = () => {
+  taskList.innerHTML = localStorage.getItem("data");
+  taskCounter = localStorage.getItem("counter");
+};
+
 const addItem = () => {
   // Initial conditions
   const userInput = taskInput.value;
 
-  // Check if input exist
-  if (!userInput) {
-    window.alert(`No task provided. Please introduce a task and try again.`);
+  // Check if limit of task exceed
+  if (taskCounter >= 5) {
+    window.alert(`Limit of task exceed. Please delete a task and try again`);
     taskInput.value = "";
     return 1;
   }
 
-  // Check if limit of task exceed
-  if (taskCounter >= 5) {
-    window.alert(`Limit of task exceed. Please delete a task and try again`);
-    console.log(taskCounter);
+  // Check if input exist
+  if (!userInput) {
+    window.alert(`No task provided. Please introduce a task and try again.`);
     taskInput.value = "";
     return 1;
   }
@@ -67,6 +77,8 @@ const addItem = () => {
 
   taskInput.value = "";
   taskCounter++;
+  saveData();
+  console.log(taskCounter);
 };
 
 // SELECTORS
@@ -91,12 +103,23 @@ taskAddBtn.addEventListener("click", addItem);
 // Mark/Unmarked as checked or delete the current item.
 taskList.addEventListener("click", (e) => {
   const item = e.target;
+  const icon = item.children[0];
+  const itemDiv = item.parentElement;
+  const itemParent = itemDiv.parentElement;
   if (item.classList[0] == "check") {
-    checkItem();
+    // checkItem();
+    icon.classList.toggle("hidden");
+    itemParent.classList.toggle("task-complete");
+    saveData();
   } else if (item.classList[0] == "delete") {
-    deleteItem();
+    itemParent.remove();
+    taskCounter--;
+    saveData();
   }
 });
+
+// Shows changes saved locally
+showTask();
 
 /* PROGRAM EXECUTION:
 1. Check if user input exist and has less than 30 characters.

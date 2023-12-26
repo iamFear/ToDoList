@@ -120,3 +120,7 @@ li p {
 .task-complete p {
   text-decoration: line-through;
 }
+
+.material-symbols-outlined {
+  pointer-events: none;
+}
